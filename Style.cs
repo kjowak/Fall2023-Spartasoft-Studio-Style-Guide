@@ -123,7 +123,7 @@ namespace StyleSheetExample
 
 
         // PROPERTIES:
-        // - Preferable to a public field.
+        // - Preferable to a public field (variable).
         // - Pascal case, without special characters.
         // - Use the expression-bodied properties to shorten, but choose your preferrred format.
         // - e.g. use expression-bodied for read-only properties but { get; set; } for everything else.
@@ -132,12 +132,6 @@ namespace StyleSheetExample
         // the private backing field
         private int _maxHealth;
 
-        // read-only, returns backing field
-        public int MaxHealthReadOnly => _maxHealth;
-
-        // equivalent to:
-        // public int MaxHealth { get; private set; }
-
         // explicitly implementing getter and setter
         public int MaxHealth
         {
@@ -145,11 +139,11 @@ namespace StyleSheetExample
             set => _maxHealth = value;
         }
 
+        // read-only (no backing field)
+        public int MinHealth { get; private set; } = 0;
+
         // write-only (not using backing field)
         public int Health { private get; set; }
-
-        // write-only, without an explicit setter
-        public void SetMaxHealth(int newMaxValue) => _maxHealth = newMaxValue;
 
         // auto-implemented property without backing field
         public string DescriptionName { get; set; } = "Fireball";
@@ -174,6 +168,7 @@ namespace StyleSheetExample
         public event Action<CustomEventArgs> ThingHappened;
 
         // These are event raising methods, e.g. OnDoorOpened, OnPointsScored, etc.
+        // This naming style should also be used for event handling methods
         public void OnDoorOpened()
         {
             DoorOpened?.Invoke();
@@ -224,8 +219,7 @@ namespace StyleSheetExample
 
 
             // SWITCH STATEMENTS:
-            // - The formatting can vary. Select one for your style guide and follow it.
-            // - This example  indents each case and the break underneath.
+            // - Indent each case and the break underneath.
             switch (someExpression)
             {
                 case 0:
@@ -240,14 +234,14 @@ namespace StyleSheetExample
             }
 
             // BRACES: 
-            // - Keep braces for clarity when using single-line statements.
-            // - Or avoid single-line statement entirely for debuggability.
+            // - Avoid single-line statements entirely for debuggability.
             // - Keep braces in nested multi-line statements.
 
-            // This single-line statement keeps the braces...
+            // This single-line statement keeps the braces, but...
             for (int i = 0; i < 100; i++) { DoSomething(i); }
 
-            // ... but this is more debuggable. You can set a breakpoint on the clause.
+            // ... this is more debuggable. You can set a breakpoint on the clause.
+            // do this instead
             for (int i = 0; i < 100; i++)
             {
                 DoSomething(i);
