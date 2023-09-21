@@ -125,38 +125,45 @@ namespace StyleSheetExample
         // PROPERTIES:
         // - Preferable to a public field (variable).
         // - Pascal case, without special characters.
-        // - Use the expression-bodied properties to shorten, but choose your preferrred format.
-        // - e.g. use expression-bodied for read-only properties but { get; set; } for everything else.
+        // - Use { get; set } (with access modifiers) for most cases
+        // - If custom logic is involved, define a dedicated setter/getter method
         // - Use the Auto-Implementated Property for a public property without a backing field.
 
-        // the private backing field
-        private int _maxHealth;
-
-        // explicitly implementing getter and setter
-        public int MaxHealth
-        {
-            get => _maxHealth;
-            set => _maxHealth = value;
-        }
-
         // read-only (no backing field)
-        public int MinHealth { get; private set; } = 0;
+        public int MaxHealth { get; private set; } = 5;
 
         // write-only (not using backing field)
-        public int Health { private get; set; }
+        public int MinHealth { private get; set; }
 
         // auto-implemented property without backing field
         public string DescriptionName { get; set; } = "Fireball";
+        
+        
+        // the private backing field
+        private int _health;
+
+        // public getter method (no custom logic)
+        public int GetHealth()
+        {
+            return _maxHealth;
+        }
+
+        // public setter method (custom logic)
+        public void SetHealth(int newHealth)
+        {
+            if (newHealth <= MaxHealth && newHealth >= MinHealth)
+            {
+                _health = newHealth;
+            }
+        }
 
 
         // EVENTS:
         // - Name with a verb phrase.
         // - Present participle means "before" and past participle mean "after."
         // - Use System.Action delegate for most events (can take 0 to 16 parameters).
-        // - Define a custom EventArg only if necessary (either System.EventArgs or a custom struct).
-        // - OR alternatively, use the System.EventHandler; choose one and apply consistently.
-        // - Choose a naming scheme for events, event handling methods (subscriber/observer), and event raising methods (publisher/subject)
-        // - e.g. event/action = "OpeningDoor", event raising method = "OnDoorOpened", event handling method = "MySubject_DoorOpened"
+        // - Naming Scheme:
+        // - event/action = "OpeningDoor", event raising method = "OnDoorOpened", event handling method = "MySubject_DoorOpened"
    
         // event before
         public event Action OpeningDoor;
@@ -168,7 +175,6 @@ namespace StyleSheetExample
         public event Action<CustomEventArgs> ThingHappened;
 
         // These are event raising methods, e.g. OnDoorOpened, OnPointsScored, etc.
-        // This naming style should also be used for event handling methods
         public void OnDoorOpened()
         {
             DoorOpened?.Invoke();
@@ -177,19 +183,6 @@ namespace StyleSheetExample
         public void OnPointsScored(int points)
         {
             PointsScored?.Invoke(points);
-        }
-
-        // This is a custom EventArg made from a struct.
-        public struct CustomEventArgs
-        {
-            public int ObjectID { get; }
-            public Color Color { get; }
-
-            public CustomEventArgs(int objectId, Color color)
-            {
-                this.ObjectID = objectId;
-                this.Color = color;
-            }
         }
 
 
