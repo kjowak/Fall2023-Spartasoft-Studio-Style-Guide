@@ -10,7 +10,7 @@
 
 // FORMATTING:
 // - Use Allman (opening curly braces on a new line) style braces. (https://en.wikipedia.org/wiki/Indentation_style#Allman_style)
-// - Keep lines short. Consider horizontal whitespace. Define a standard line width in your style guide (80-120 characters). 
+// - Keep lines short. Consider horizontal whitespace. Standard line width is 80 characters. 
 // - Use a single space before flow control conditions, e.g. while (x == y)
 // - Avoid spaces inside brackets, e.g. x = dataArray[index]
 // - Use a single space after a comma between function arguments.
@@ -21,7 +21,7 @@
 // COMMENTS:
 // - Rather than simply answering "what" or "how," comments can fill in the gaps and tell us "why."
 // - Use the // comment to keep the explanation next to the logic.
-// - Use a Tooltip instead of a comment for serialized fields. 
+// - Use a Tooltip instead of a comment for serialized fields. This will make our code more designer-friendly.
 // - Avoid Regions. They encourage large class sizes. Collapsed code is more difficult to read. 
 // - Use a link to an external reference for legal information or licensing to save space.
 // - Use a summary XML tag in front of public methods or functions for output documentation/Intellisense.
@@ -142,19 +142,33 @@ namespace StyleSheetExample
         // the private backing field
         private int _health;
 
-        // public getter method (no custom logic)
+        // public getter method with example XML documentation:
+        
+        /// <summary>
+        /// Gets the player's health
+        /// </summary>
+        /// <returns>The current value of the player's health</returns>
         public int GetHealth()
         {
             return _maxHealth;
         }
 
-        // public setter method (custom logic)
-        public void SetHealth(int newHealth)
+
+        // public setter method (custom logic) with XML documentation:
+        
+        /// <summary>
+        /// Attempts to set the player's health
+        /// </summary>
+        /// <param name="newHealth">The new health value to set</param>
+        /// <returns>True if health was successfully changed, false otherwise</returns>
+        public bool SetHealth(int newHealth)
         {
             if (newHealth <= MaxHealth && newHealth >= MinHealth)
             {
                 _health = newHealth;
+                return true;
             }
+            return false;
         }
 
 
